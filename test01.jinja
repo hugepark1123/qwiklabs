@@ -1,4 +1,12 @@
 resources:
+- name: default-allow-http
+  type: compute.v1.firewall
+  properties:
+    sourceRanges: ["0.0.0.0/0"]
+    targetTags: ["http-server"]
+    allowed:
+    - IPProtocol: TCP
+      ports: ["80"]
 - type: compute.v1.instance
   name: vm-test
   properties:
@@ -22,12 +30,5 @@ resources:
         type: ONE_TO_ONE_NAT
     metadata-from-file:
       startup-script: gs://qasdlkfjadsfasdf-12/install-web.sh
-resources:
-- name: default-allow-http
-  type: compute.v1.firewall
-  properties:
-    sourceRanges: ["0.0.0.0/0"]
-    targetTags: ["http-server"]
-    allowed:
-    - IPProtocol: TCP
-      ports: ["80"]
+    tags:
+    - http-server
